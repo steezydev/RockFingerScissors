@@ -1,0 +1,8 @@
+{
+  "name": "config",
+  "version": "1.0.0",
+  "description": "Project configurations",
+  "main": "index.js",
+  "author": "STEEZY",
+  "license": "MIT"
+}

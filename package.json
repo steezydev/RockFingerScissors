@@ -1,0 +1,25 @@
+{
+  "name": "rps-solidity",
+  "version": "1.0.0",
+  "description": "Rock-paper-scissors solidity game",
+  "main": "index.js",
+  "author": "STEEZY",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "dapp",
+    "contract",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "yarn --cwd dapp dev",
+    "compile": "yarn --cwd contract compile",
+    "lint": "yarn --cwd dapp lint:strict",
+    "typecheck": "yarn --cwd dapp typecheck",
+    "format:check": "yarn --cwd dapp format:check",
+    "test": "yarn test-dapp && yarn test-contract",
+    "test-dapp": "yarn --cwd dapp test",
+    "test-contract": "yarn --cwd contract test",
+    "prepare": "cd .. && husky install dapp/.husky"
+  }
+}
