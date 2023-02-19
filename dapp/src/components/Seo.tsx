@@ -2,8 +2,8 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 const defaultMeta = {
-  title: 'Rock ~ Finger ~ Peace',
-  siteName: 'Rock ~ Finger ~ Peace',
+  title: 'Rock ~ Finger ~ Scissors',
+  siteName: 'Rock ~ Finger ~ Scissors',
   description: 'Rock-paper-scissors game made on BNB network',
   url: '',
   type: 'website',
