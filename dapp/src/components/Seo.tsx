@@ -8,7 +8,7 @@ const defaultMeta = {
   url: '',
   type: 'website',
   robots: 'follow, index',
-  image: 'https://tsnext-tw.thcl.dev/images/large-og.png',
+  image: 'https://rock-finger-scissors-dapp.vercel.app/images/large-og.png',
 };
 
 type SeoProps = {
