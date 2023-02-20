@@ -66,11 +66,13 @@
       rgba(47, 128, 237, 1) 0%,
       rgba(178, 255, 218, 1) 100%
     );
-    min-height: 100vh;
   }
 
+  html,
   body {
-    overscroll-behavior-y: none;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
   }
 
   .layout {
