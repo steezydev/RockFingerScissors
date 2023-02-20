@@ -59,6 +59,7 @@
   /* #endregion  /**======== Typography =========== */
 
   html {
+    overscroll-behavior-y: none;
     background: rgb(47, 128, 237);
     background: linear-gradient(
       145deg,
