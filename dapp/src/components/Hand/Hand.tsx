@@ -14,6 +14,7 @@ export default function Hand() {
         stiffness: 100,
         mass: 0.5,
       }}
+      className='select-none'
     >
       <Image quality={100} alt='hand' src={HandImg}></Image>
     </motion.div>
