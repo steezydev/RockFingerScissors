@@ -30,7 +30,7 @@ export default function HandWrapper({
   const isHover = useHover(hoverRef);
 
   return (
-    <div ref={hoverRef} className='relative grow'>
+    <div ref={hoverRef} className='relative'>
       <div className='h-full'>{children}</div>
       <div
         className={clsxm(

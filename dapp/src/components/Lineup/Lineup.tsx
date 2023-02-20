@@ -14,7 +14,10 @@ export default function Lineup({ hand1, hand2 }: LineupProps) {
   const isHover = useHover(hoverRef);
 
   return (
-    <div ref={hoverRef} className='flex flex-row items-center justify-between'>
+    <div
+      ref={hoverRef}
+      className='flex h-96 flex-row items-center justify-between'
+    >
       <Hand
         direction={90}
         initial={{ x: -200 }}

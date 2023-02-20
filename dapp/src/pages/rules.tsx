@@ -1,4 +1,3 @@
-import { StaticImageData } from 'next/image';
 import * as React from 'react';
 
 import { bcsscanUrl, githubUrl, twitterUrl } from '@/lib/const';
@@ -7,8 +6,6 @@ import IconLink from '@/components/IconLink/IconLink';
 import Layout from '@/components/layout/Layout';
 import Lineup from '@/components/Lineup/Lineup';
 import Seo from '@/components/Seo';
-
-import { THands } from '@/types/hands';
 
 import Finger1 from '~/images/hands/hand-finger-1.png';
 import Rock1 from '~/images/hands/hand-rock-1.png';
@@ -60,7 +57,7 @@ export default function RulesPage() {
               </div>
               <span className='font-grand text-9xl text-white/70'>»</span>
             </div>
-            <div className='flex flex-col'>
+            <div className='mt-10 flex flex-col gap-10'>
               <Lineup hand1={Rock1} hand2={Scissors1} />
               <Lineup hand1={Scissors1} hand2={Finger1} />
               <Lineup hand1={Finger1} hand2={Rock1} />
@@ -82,16 +79,4 @@ export default function RulesPage() {
       </main>
     </Layout>
   );
-}
-
-export async function getServerSideProps({
-  params,
-  index,
-}: {
-  params: THands;
-  index: number;
-}) {
-  const image = (await import(`hand-${params}-${index}`)) as StaticImageData;
-
-  return image;
 }
