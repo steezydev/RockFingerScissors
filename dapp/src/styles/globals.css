@@ -67,6 +67,10 @@
     );
   }
 
+  body {
+    overscroll-behavior-y: none;
+  }
+
   .layout {
     /* 1100px */
     max-width: 68.75rem;
