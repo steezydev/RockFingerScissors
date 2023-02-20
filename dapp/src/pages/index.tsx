@@ -1,13 +1,16 @@
 import * as React from 'react';
 
+import { bcsscanUrl, githubUrl, twitterUrl } from '@/lib/const';
+
+import AccentButton from '@/components/AccentButton/AccentButton';
+import HandWrapper from '@/components/HandWrapper/HandWrapper';
+import IconLink from '@/components/IconLink/IconLink';
 import Layout from '@/components/layout/Layout';
-import ArrowLink from '@/components/links/ArrowLink';
-import ButtonLink from '@/components/links/ButtonLink';
-import UnderlineLink from '@/components/links/UnderlineLink';
-import UnstyledLink from '@/components/links/UnstyledLink';
 import Seo from '@/components/Seo';
 
-import Vercel from '~/svg/Vercel.svg';
+import BinanceIcon from '~/svg/Binance.svg';
+import GithubIcon from '~/svg/Github.svg';
+import TwitterIcon from '~/svg/Twitter.svg';
 
 export default function HomePage() {
   return (
@@ -16,45 +19,30 @@ export default function HomePage() {
       <Seo />
 
       <main>
-        <section className='bg-white'>
-          <div className='layout relative flex min-h-screen flex-col items-center justify-center py-12 text-center'>
-            <Vercel className='text-5xl' />
-            <h1 className='mt-4'>
-              Next.js + Tailwind CSS + TypeScript Starter
-            </h1>
-            <p className='mt-2 text-sm text-gray-800'>
-              A starter for Next.js, Tailwind CSS, and TypeScript with Absolute
-              Import, Seo, Link component, pre-configured with Husky{' '}
-            </p>
-            <p className='mt-2 text-sm text-gray-700'>
-              <ArrowLink href='https://github.com/theodorusclarence/ts-nextjs-tailwind-starter'>
-                See the repository
-              </ArrowLink>
-            </p>
-
-            <ButtonLink className='mt-6' href='/components' variant='light'>
-              See all components
-            </ButtonLink>
-
-            <UnstyledLink
-              href='https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Ftheodorusclarence%2Fts-nextjs-tailwind-starter'
-              className='mt-4'
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                width='92'
-                height='32'
-                src='https://vercel.com/button'
-                alt='Deploy with Vercel'
-              />
-            </UnstyledLink>
-
-            <footer className='absolute bottom-2 text-gray-700'>
-              © {new Date().getFullYear()} By{' '}
-              <UnderlineLink href='https://theodorusclarence.com?ref=tsnextstarter'>
-                Theodorus Clarence
-              </UnderlineLink>
-            </footer>
+        <section className='overflow-hidden px-2'>
+          <div className='relative flex min-h-screen flex-col'>
+            <div className='absolute top-24 left-1/2 -translate-x-1/2 md:top-0 md:left-0 md:translate-x-0'>
+              <h1>Welcome!</h1>
+            </div>
+            <div className='flex h-full flex-grow flex-col items-center justify-center'>
+              <HandWrapper>
+                <AccentButton
+                  title='Connect wallet'
+                  description='Connect only burner wallet to keep your funds safe!'
+                />
+              </HandWrapper>
+            </div>
+            <div className='absolute bottom-6 left-5 flex flex-row gap-5'>
+              <IconLink href={twitterUrl}>
+                <TwitterIcon />
+              </IconLink>
+              <IconLink href={githubUrl}>
+                <GithubIcon />
+              </IconLink>
+              <IconLink href={bcsscanUrl}>
+                <BinanceIcon />
+              </IconLink>
+            </div>
           </div>
         </section>
       </main>
