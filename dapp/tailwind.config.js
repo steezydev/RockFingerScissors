@@ -9,6 +9,7 @@ module.exports = {
       fontFamily: {
         primary: ['Rusty Hooks', ...fontFamily.sans],
         display: ['ClashDisplay', ...fontFamily.sans],
+        grand: ['Grandstander', ...fontFamily.sans],
         accent: ['Outfit', ...fontFamily.sans],
       },
       colors: {

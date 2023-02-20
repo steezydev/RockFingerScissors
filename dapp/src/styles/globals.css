@@ -20,6 +20,14 @@
   }
 
   @font-face {
+    font-family: 'Grandstander';
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: optional;
+    src: url('/fonts/grandstander.ttf') format('opentype');
+  }
+
+  @font-face {
     font-family: 'Rusty Hooks';
     font-style: normal;
     font-weight: 500;

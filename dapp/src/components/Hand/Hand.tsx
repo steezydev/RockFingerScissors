@@ -1,28 +1,44 @@
 import { motion } from 'framer-motion';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import React from 'react';
 
-import HandImg from '~/images/hands/hand-point-1.png';
+import clsxm from '@/lib/clsxm';
 
-export default function Hand() {
+import { Cords } from '@/types/animate';
+
+interface HandProps {
+  initial: Cords;
+  animate: Cords;
+  image: StaticImageData;
+  hover?: Cords;
+  isHover?: boolean;
+  direction?: number;
+}
+
+export default function Hand({
+  initial,
+  animate,
+  image,
+  hover = {},
+  isHover = false,
+  direction = 0,
+}: HandProps) {
   return (
     <motion.div
-      initial={{ y: 500, x: 0 }}
-      animate={{ y: 150, x: 0 }}
+      initial={{ rotate: direction, ...initial }}
+      animate={
+        isHover
+          ? { rotate: direction, ...hover }
+          : { rotate: direction, ...animate }
+      }
       transition={{
         type: 'spring',
         stiffness: 100,
         mass: 0.5,
       }}
-      className='select-none'
+      className={clsxm('w-[398px] select-none')}
     >
-      <Image
-        width={398}
-        priority
-        quality={100}
-        alt='hand'
-        src={HandImg}
-      ></Image>
+      <Image width={398} priority quality={100} alt='hand' src={image}></Image>
     </motion.div>
   );
 }

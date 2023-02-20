@@ -3,11 +3,19 @@ import React from 'react';
 interface AccentButton {
   title: string;
   description?: string;
+  onClick?: () => void;
 }
 
-export default function AccentButton({ title, description }: AccentButton) {
+export default function AccentButton({
+  title,
+  description,
+  onClick = () => void 1,
+}: AccentButton) {
   return (
-    <div className='flex cursor-pointer select-none flex-col items-center justify-center gap-3'>
+    <button
+      onClick={onClick}
+      className='flex cursor-pointer select-none flex-col items-center justify-center gap-3'
+    >
       <span className='font-display text-3xl font-semibold md:text-5xl'>
         {title}
       </span>
@@ -16,6 +24,6 @@ export default function AccentButton({ title, description }: AccentButton) {
           {description}
         </span>
       ) : null}
-    </div>
+    </button>
   );
 }
