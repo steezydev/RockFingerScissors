@@ -58,7 +58,7 @@
   }
   /* #endregion  /**======== Typography =========== */
 
-  body {
+  html {
     background: rgb(47, 128, 237);
     background: linear-gradient(
       145deg,
