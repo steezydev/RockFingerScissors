@@ -7,7 +7,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        primary: ['Inter', ...fontFamily.sans],
+        primary: ['Rusty Hooks', ...fontFamily.sans],
+        display: ['ClashDisplay', ...fontFamily.sans],
+        accent: ['Outfit', ...fontFamily.sans],
       },
       colors: {
         primary: {

@@ -34,7 +34,7 @@
 
   h1,
   .h1 {
-    @apply font-primary text-2xl font-bold md:text-4xl;
+    @apply font-display text-6xl font-bold leading-none md:text-[14rem];
   }
 
   h2,
@@ -54,9 +54,18 @@
 
   body,
   .p {
-    @apply font-primary text-sm md:text-base;
+    @apply font-primary text-sm text-white md:text-base;
   }
   /* #endregion  /**======== Typography =========== */
+
+  body {
+    background: rgb(47, 128, 237);
+    background: linear-gradient(
+      145deg,
+      rgba(47, 128, 237, 1) 0%,
+      rgba(178, 255, 218, 1) 100%
+    );
+  }
 
   .layout {
     /* 1100px */
