@@ -16,7 +16,13 @@ export default function Hand() {
       }}
       className='select-none'
     >
-      <Image quality={100} alt='hand' src={HandImg}></Image>
+      <Image
+        width={398}
+        priority
+        quality={100}
+        alt='hand'
+        src={HandImg}
+      ></Image>
     </motion.div>
   );
 }
