@@ -6,7 +6,7 @@ import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 import "@chainlink/contracts/src/v0.8/ConfirmedOwner.sol";
 
-contract Rps is VRFConsumerBaseV2, ConfirmedOwner {
+contract RFS is VRFConsumerBaseV2, ConfirmedOwner {
     enum StatusEnum {
         WON, // Player WON the challenge
         LOST, // Player LOST the challenge
@@ -16,11 +16,16 @@ contract Rps is VRFConsumerBaseV2, ConfirmedOwner {
 
     struct ChallengeStatus {
         bool exists; // whether a challenge exists
+        uint256 bet;
         address player;
         StatusEnum status;
         uint8 playerChoice;
         uint8 hostChoice;
     }
+
+    uint256 constant minBet = 0.001 ether;
+    uint256 constant maxBet = 0.1 ether;
+    uint8 constant numWords = 1;
 
     mapping(address => uint256) public s_currentGame;
     mapping(uint256 => ChallengeStatus) public s_challenges;
@@ -36,9 +41,6 @@ contract Rps is VRFConsumerBaseV2, ConfirmedOwner {
     uint32 callbackGasLimit;
 
     uint16 requestConfirmations;
-
-    // 1 random value
-    uint8 numWords = 1;
 
     event ChallengeOpened(
         uint256 indexed challengeId,
@@ -56,11 +58,18 @@ contract Rps is VRFConsumerBaseV2, ConfirmedOwner {
         uint8 hostChoice
     );
 
+    event Received(address sender, uint256 value);
+
     modifier OnlyValidRps(uint8 _choice) {
         require(
             _choice > 0 && _choice < 4,
             "Choice must be a number between 1 & 3"
         );
+        _;
+    }
+
+    modifier OnlyEnoughBalance(uint256 _amount) {
+        require(_amount <= address(this).balance, "Insufficient balance");
         _;
     }
 
@@ -119,8 +128,11 @@ contract Rps is VRFConsumerBaseV2, ConfirmedOwner {
         );
     }
 
-    function play(uint8 _choice) external OnlyValidRps(_choice) {
-        openChallange(msg.sender, _choice);
+    function play(
+        uint8 _choice
+    ) external payable OnlyValidRps(_choice) OnlyEnoughBalance(msg.value * 2) {
+        require(msg.value >= minBet && msg.value <= maxBet, "Invalid bet");
+        openChallange(msg.sender, _choice, msg.value);
     }
 
     function determineWinner(
@@ -142,7 +154,8 @@ contract Rps is VRFConsumerBaseV2, ConfirmedOwner {
 
     function openChallange(
         address _player,
-        uint8 _choice
+        uint8 _choice,
+        uint256 _bet
     ) internal OnlyValidRps(_choice) returns (uint256 challengeId) {
         //require(s_challenges[_player].status != StatusEnum.PENDING, "The previous game has not finished");
 
@@ -158,6 +171,7 @@ contract Rps is VRFConsumerBaseV2, ConfirmedOwner {
         s_currentGame[_player] = challengeId;
         s_challenges[challengeId] = ChallengeStatus({
             exists: true,
+            bet: _bet,
             player: _player,
             status: StatusEnum.PENDING,
             playerChoice: _choice,
@@ -173,6 +187,13 @@ contract Rps is VRFConsumerBaseV2, ConfirmedOwner {
         );
 
         return challengeId;
+    }
+
+    function payWinner(
+        address _recipient,
+        uint256 _amount
+    ) internal OnlyEnoughBalance(_amount) {
+        payable(_recipient).transfer(_amount);
     }
 
     function fulfillRandomWords(
@@ -192,6 +213,12 @@ contract Rps is VRFConsumerBaseV2, ConfirmedOwner {
         s_challenges[challengeId].hostChoice = _hostChoice;
         s_challenges[challengeId].status = _status;
 
+        if (_status == StatusEnum.WON) {
+            payWinner(_challenge.player, _challenge.bet * 2);
+        } else if (_status == StatusEnum.TIE) {
+            payWinner(_challenge.player, _challenge.bet);
+        }
+
         emit ChallengeClosed(
             challengeId,
             _challenge.player,
@@ -199,5 +226,14 @@ contract Rps is VRFConsumerBaseV2, ConfirmedOwner {
             _challenge.playerChoice,
             _hostChoice
         );
+    }
+
+    function withdraw() public onlyOwner {
+        (bool os, ) = payable(owner()).call{value: address(this).balance}("");
+        require(os);
+    }
+
+    receive() external payable {
+        emit Received(msg.sender, msg.value);
     }
 }

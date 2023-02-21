@@ -63,7 +63,7 @@ const ABI = [
       },
       {
         indexed: true,
-        internalType: 'enum Rps.StatusEnum',
+        internalType: 'enum RFS.StatusEnum',
         name: 'status',
         type: 'uint8',
       },
@@ -100,7 +100,7 @@ const ABI = [
       },
       {
         indexed: true,
-        internalType: 'enum Rps.StatusEnum',
+        internalType: 'enum RFS.StatusEnum',
         name: 'status',
         type: 'uint8',
       },
@@ -159,6 +159,25 @@ const ABI = [
     type: 'event',
   },
   {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'sender',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'value',
+        type: 'uint256',
+      },
+    ],
+    name: 'Received',
+    type: 'event',
+  },
+  {
     inputs: [],
     name: 'acceptOwnership',
     outputs: [],
@@ -176,7 +195,7 @@ const ABI = [
     name: 'getChallengeStatus',
     outputs: [
       {
-        internalType: 'enum Rps.StatusEnum',
+        internalType: 'enum RFS.StatusEnum',
         name: 'status',
         type: 'uint8',
       },
@@ -215,7 +234,7 @@ const ABI = [
     name: 'getCurrentChallengeStatus',
     outputs: [
       {
-        internalType: 'enum Rps.StatusEnum',
+        internalType: 'enum RFS.StatusEnum',
         name: 'status',
         type: 'uint8',
       },
@@ -266,7 +285,7 @@ const ABI = [
     ],
     name: 'play',
     outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'payable',
     type: 'function',
   },
   {
@@ -303,12 +322,17 @@ const ABI = [
         type: 'bool',
       },
       {
+        internalType: 'uint256',
+        name: 'bet',
+        type: 'uint256',
+      },
+      {
         internalType: 'address',
         name: 'player',
         type: 'address',
       },
       {
-        internalType: 'enum Rps.StatusEnum',
+        internalType: 'enum RFS.StatusEnum',
         name: 'status',
         type: 'uint8',
       },
@@ -357,6 +381,17 @@ const ABI = [
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'withdraw',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    stateMutability: 'payable',
+    type: 'receive',
   },
 ] as const;
 

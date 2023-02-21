@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { useAccount } from 'wagmi';
 
 import { getImageByChoice, getTitleByChoice } from '@/lib/getChoice';
@@ -24,6 +25,8 @@ export default function ChoosePage() {
   const [selected, setSelected] = useState<number | null>(null);
   const [showSelected, setShowSelected] = useState<boolean>(false);
 
+  const [cookies] = useCookies(['bet']);
+
   const select = async (choice: number) => {
     if (!address) {
       return false;
@@ -32,7 +35,7 @@ export default function ChoosePage() {
     setSelected(choice);
 
     try {
-      await rfsPlay(choice);
+      await rfsPlay(address, choice, cookies.bet ?? 0.001);
     } catch (e) {
       setShowSelected(false);
       setSelected(null);

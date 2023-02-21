@@ -6,6 +6,7 @@ import { useAccount } from 'wagmi';
 import { bcsscanUrl, githubUrl, twitterUrl } from '@/lib/const';
 
 import AccentButton from '@/components/AccentButton/AccentButton';
+import BetBox from '@/components/BetBox/BetBox';
 import HandWrapper from '@/components/HandWrapper/HandWrapper';
 import IconLink from '@/components/IconLink/IconLink';
 import Layout from '@/components/layout/Layout';
@@ -30,8 +31,9 @@ export default function AllsetPage() {
           <div className='relative flex min-h-screen flex-col'>
             <div className='absolute top-24 left-1/2 flex w-full -translate-x-1/2 items-start justify-between md:top-0 md:left-0 md:translate-x-0'>
               <Title>Welcome!</Title>
-              <div className='pt-5'>
+              <div className='flex flex-col items-end gap-3 pt-5'>
                 <ConnectButton />
+                {address && <BetBox />}
               </div>
             </div>
             <motion.div
