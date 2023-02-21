@@ -27,16 +27,14 @@ export default function Lineup({
       ref={hoverRef}
       className='flex h-96 flex-row items-center justify-between'
     >
-      {hand1 && (
-        <Hand
-          direction={90}
-          initial={{ x: -400 }}
-          animate={{ x: 70 }}
-          hover={{ x: 50 }}
-          image={hand1}
-          isHover={isHover && hover}
-        />
-      )}
+      <Hand
+        direction={90}
+        initial={{ x: -400 }}
+        animate={{ x: 70 }}
+        hover={{ x: 50 }}
+        image={hand1}
+        isHover={isHover && hover}
+      />
       <span className='text-9xl'>{children}</span>
       <Hand
         direction={-90}

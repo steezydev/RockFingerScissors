@@ -6,6 +6,7 @@ import { useAccount } from 'wagmi';
 
 import { getImageByChoice, getTitleByChoice } from '@/lib/getChoice';
 
+import BackButton from '@/components/BackButton/BackButton';
 import HoverHand from '@/components/HoverHand/HoverHand';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
@@ -82,9 +83,10 @@ export default function ChoosePage() {
           <div className='relative flex min-h-screen flex-col'>
             <div className='absolute top-24 left-1/2 -translate-x-1/2 md:top-0 md:left-0 md:translate-x-0'>
               <Title>Choose!</Title>
+              <BackButton />
             </div>
             {selected != null && showSelected && (
-              <div className='mt-48 flex h-full w-full grow flex-row items-stretch justify-around'>
+              <div className='mt-72 flex h-full w-full grow flex-row items-stretch justify-around'>
                 <HoverHand
                   active={true}
                   image={getImageByChoice(selected)}
@@ -99,7 +101,7 @@ export default function ChoosePage() {
                 <motion.div
                   onAnimationComplete={() => setShowSelected(true)}
                   exit={{ y: 800 }}
-                  className='mt-48 flex h-full w-full grow flex-row items-stretch justify-around'
+                  className='mt-72 flex h-full w-full grow flex-row items-stretch justify-around'
                 >
                   <HoverHand
                     onClick={() => select(1)}
