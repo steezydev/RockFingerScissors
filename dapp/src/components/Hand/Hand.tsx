@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Image, { StaticImageData } from 'next/image';
 import React from 'react';
 
@@ -24,21 +24,30 @@ export default function Hand({
   direction = 0,
 }: HandProps) {
   return (
-    <motion.div
-      initial={{ rotate: direction, ...initial }}
-      animate={
-        isHover
-          ? { rotate: direction, ...hover }
-          : { rotate: direction, ...animate }
-      }
-      transition={{
-        type: 'spring',
-        stiffness: 100,
-        mass: 0.5,
-      }}
-      className={clsxm('w-[398px] select-none')}
-    >
-      <Image width={398} priority quality={100} alt='hand' src={image}></Image>
-    </motion.div>
+    <AnimatePresence>
+      <motion.div
+        initial={{ rotate: direction, ...initial }}
+        animate={
+          isHover
+            ? { rotate: direction, ...hover }
+            : { rotate: direction, ...animate }
+        }
+        exit={{ rotate: direction, ...initial }}
+        transition={{
+          type: 'spring',
+          stiffness: 100,
+          mass: 0.5,
+        }}
+        className={clsxm('w-[398px] select-none')}
+      >
+        <Image
+          width={398}
+          priority
+          quality={100}
+          alt='hand'
+          src={image}
+        ></Image>
+      </motion.div>
+    </AnimatePresence>
   );
 }

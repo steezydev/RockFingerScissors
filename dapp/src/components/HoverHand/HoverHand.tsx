@@ -15,18 +15,23 @@ interface HoverHandProps {
   children: React.ReactNode;
   handClasses?: string;
   image: StaticImageData;
+  active?: boolean;
+  onClick?: () => void;
 }
 
 export default function HoverHand({
   children,
   handClasses,
   image,
+  active = false,
+  onClick = () => void 1,
 }: HoverHandProps) {
   const hoverRef = useRef(null);
   const isHover = useHover(hoverRef);
 
   return (
     <div
+      onClick={onClick}
       ref={hoverRef}
       className={clsxm(
         'relative flex h-auto grow cursor-pointer select-none flex-col items-center justify-center',
@@ -36,7 +41,7 @@ export default function HoverHand({
       <motion.div
         initial={{ opacity: 0, y: 100, rotate: 0 }}
         animate={
-          isHover
+          isHover || active
             ? { opacity: 1, y: -150, rotate: rndNum([-10, 10]) }
             : { opacity: 0, y: 100, rotate: 0 }
         }
@@ -45,11 +50,11 @@ export default function HoverHand({
       </motion.div>
       <div className='absolute -bottom-64 left-1/2 -translate-x-1/2'>
         <Hand
-          initial={{ y: 0 }}
+          initial={{ y: 250 }}
           animate={{ y: 0 }}
           hover={{ y: -140 }}
           image={image}
-          isHover={isHover}
+          isHover={isHover || active}
         />
       </div>
     </div>

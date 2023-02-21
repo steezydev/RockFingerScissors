@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import * as React from 'react';
 
 import { bcsscanUrl, githubUrl, twitterUrl } from '@/lib/const';
@@ -6,6 +7,7 @@ import IconLink from '@/components/IconLink/IconLink';
 import Layout from '@/components/layout/Layout';
 import Lineup from '@/components/Lineup/Lineup';
 import Seo from '@/components/Seo';
+import Title from '@/components/Title/Title';
 
 import Finger1 from '~/images/hands/hand-finger-1.png';
 import Rock1 from '~/images/hands/hand-rock-1.png';
@@ -23,7 +25,7 @@ export default function RulesPage() {
         <section className='overflow-hidden px-2'>
           <div className='relative flex min-h-screen flex-col'>
             <div className='absolute top-24 left-1/2 -translate-x-1/2 md:top-0 md:left-0 md:translate-x-0'>
-              <h1>Rules...</h1>
+              <Title>Rules...</Title>
               <div className='flex flex-row  items-center gap-5'>
                 <svg
                   width='40'
@@ -39,17 +41,18 @@ export default function RulesPage() {
                     fill='white'
                   />
                 </svg>
-
-                <span className='font-display text-4xl font-semibold'>
-                  Back
-                </span>
+                <Link href='/'>
+                  <span className='font-display text-4xl font-semibold'>
+                    Back
+                  </span>
+                </Link>
               </div>
             </div>
 
             <div className='mt-96 flex h-full flex-row items-center justify-center gap-28'>
               <span className='font-grand text-9xl text-white/70'>«</span>
               <div className='flex'>
-                <div className='flex flex-col items-center justify-center gap-10 font-grand text-2xl '>
+                <div className='flex flex-col items-center justify-center gap-10 font-accent text-2xl '>
                   <span>You play against smart-contract</span>
                   <span>Default bet is 0.01 TBNB</span>
                   <span>If you win, you get 0.02 TBNB as your reward </span>
@@ -57,10 +60,16 @@ export default function RulesPage() {
               </div>
               <span className='font-grand text-9xl text-white/70'>»</span>
             </div>
-            <div className='mt-10 flex flex-col gap-10'>
-              <Lineup hand1={Rock1} hand2={Scissors1} />
-              <Lineup hand1={Scissors1} hand2={Finger1} />
-              <Lineup hand1={Finger1} hand2={Rock1} />
+            <div className='mt-32 flex flex-col gap-10'>
+              <Lineup hand1={Rock1} hand2={Scissors1}>
+                beats...
+              </Lineup>
+              <Lineup hand1={Scissors1} hand2={Finger1}>
+                beats...
+              </Lineup>
+              <Lineup hand1={Finger1} hand2={Rock1}>
+                beats...
+              </Lineup>
             </div>
 
             <div className='absolute bottom-6 left-5 flex flex-row gap-5'>

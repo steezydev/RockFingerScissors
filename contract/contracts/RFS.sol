@@ -6,7 +6,7 @@ import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 import "@chainlink/contracts/src/v0.8/ConfirmedOwner.sol";
 
-contract RFS is VRFConsumerBaseV2, ConfirmedOwner {
+contract Rps is VRFConsumerBaseV2, ConfirmedOwner {
     enum StatusEnum {
         WON, // Player WON the challenge
         LOST, // Player LOST the challenge
@@ -16,13 +16,14 @@ contract RFS is VRFConsumerBaseV2, ConfirmedOwner {
 
     struct ChallengeStatus {
         bool exists; // whether a challenge exists
+        address player;
         StatusEnum status;
         uint8 playerChoice;
         uint8 hostChoice;
     }
 
-    mapping(uint256 => address) private s_players;
-    mapping(address => ChallengeStatus) public s_challenges;
+    mapping(address => uint256) public s_currentGame;
+    mapping(uint256 => ChallengeStatus) public s_challenges;
 
     VRFCoordinatorV2Interface COORDINATOR;
 
@@ -41,11 +42,15 @@ contract RFS is VRFConsumerBaseV2, ConfirmedOwner {
 
     event ChallengeOpened(
         uint256 indexed challengeId,
+        address indexed player,
+        StatusEnum indexed status,
         uint8 playerChoice,
-        uint8 numWords
+        uint8 hostChoice
     );
+
     event ChallengeClosed(
         uint256 indexed challengeId,
+        address indexed player,
         StatusEnum indexed status,
         uint8 playerChoice,
         uint8 hostChoice
@@ -73,16 +78,45 @@ contract RFS is VRFConsumerBaseV2, ConfirmedOwner {
         requestConfirmations = _requestConfirmations;
     }
 
-    function getChallengeStatus(
+    function getCurrentChallengeStatus(
         address _player
     )
         external
         view
-        returns (StatusEnum status, uint8 playerChoice, uint8 hostChoice)
+        returns (
+            StatusEnum status,
+            uint256 challengeId,
+            address player,
+            uint8 playerChoice,
+            uint8 hostChoice
+        )
     {
-        require(s_challenges[_player].exists, "Challenge not found");
-        ChallengeStatus memory challenge = s_challenges[_player];
-        return (challenge.status, challenge.playerChoice, challenge.hostChoice);
+        uint256 currentChallengeId = s_currentGame[_player];
+        return getChallengeStatus(currentChallengeId);
+    }
+
+    function getChallengeStatus(
+        uint256 _challengeId
+    )
+        public
+        view
+        returns (
+            StatusEnum status,
+            uint256 challengeId,
+            address player,
+            uint8 playerChoice,
+            uint8 hostChoice
+        )
+    {
+        require(s_challenges[_challengeId].exists, "Challenge not found");
+        ChallengeStatus memory challenge = s_challenges[_challengeId];
+        return (
+            challenge.status,
+            _challengeId,
+            challenge.player,
+            challenge.playerChoice,
+            challenge.hostChoice
+        );
     }
 
     function play(uint8 _choice) external OnlyValidRps(_choice) {
@@ -110,6 +144,8 @@ contract RFS is VRFConsumerBaseV2, ConfirmedOwner {
         address _player,
         uint8 _choice
     ) internal OnlyValidRps(_choice) returns (uint256 challengeId) {
+        //require(s_challenges[_player].status != StatusEnum.PENDING, "The previous game has not finished");
+
         // Will revert if subscription is not set and funded.
         challengeId = COORDINATOR.requestRandomWords(
             keyHash,
@@ -119,15 +155,22 @@ contract RFS is VRFConsumerBaseV2, ConfirmedOwner {
             numWords
         );
 
-        s_players[challengeId] = _player;
-        s_challenges[_player] = ChallengeStatus({
+        s_currentGame[_player] = challengeId;
+        s_challenges[challengeId] = ChallengeStatus({
             exists: true,
+            player: _player,
             status: StatusEnum.PENDING,
             playerChoice: _choice,
             hostChoice: 0
         });
 
-        emit ChallengeOpened(challengeId, _choice, numWords);
+        emit ChallengeOpened(
+            challengeId,
+            _player,
+            StatusEnum.PENDING,
+            _choice,
+            0
+        );
 
         return challengeId;
     }
@@ -136,22 +179,23 @@ contract RFS is VRFConsumerBaseV2, ConfirmedOwner {
         uint256 challengeId,
         uint256[] memory _randomWords
     ) internal override {
-        address _player = s_players[challengeId];
-
-        ChallengeStatus memory _challenge = s_challenges[_player];
+        ChallengeStatus memory _challenge = s_challenges[challengeId];
 
         require(_challenge.exists, "Challenge not found");
-        uint8 _hostChoice = uint8((_randomWords[0] % 3) + 1);
 
-        s_challenges[_player].hostChoice = _hostChoice;
-        s_challenges[_player].status = determineWinner(
+        uint8 _hostChoice = uint8((_randomWords[0] % 3) + 1);
+        StatusEnum _status = determineWinner(
             _challenge.playerChoice,
             _hostChoice
         );
 
+        s_challenges[challengeId].hostChoice = _hostChoice;
+        s_challenges[challengeId].status = _status;
+
         emit ChallengeClosed(
             challengeId,
-            s_challenges[_player].status,
+            _challenge.player,
+            _status,
             _challenge.playerChoice,
             _hostChoice
         );

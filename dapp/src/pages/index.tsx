@@ -1,4 +1,7 @@
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { AnimatePresence, motion } from 'framer-motion';
 import * as React from 'react';
+import { useAccount } from 'wagmi';
 
 import { bcsscanUrl, githubUrl, twitterUrl } from '@/lib/const';
 
@@ -7,37 +10,71 @@ import HandWrapper from '@/components/HandWrapper/HandWrapper';
 import IconLink from '@/components/IconLink/IconLink';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
+import Title from '@/components/Title/Title';
 
 import Pointer1 from '~/images/hands/hand-point-1.png';
+import Pointer2 from '~/images/hands/hand-point-2.png';
 import BinanceIcon from '~/svg/Binance.svg';
 import GithubIcon from '~/svg/Github.svg';
 import TwitterIcon from '~/svg/Twitter.svg';
 
-export default function HomePage() {
+export default function AllsetPage() {
+  const { address } = useAccount();
+
   return (
     <Layout>
-      {/* <Seo templateTitle='Home' /> */}
-      <Seo />
+      <Seo templateTitle='Welcome' />
 
       <main>
         <section className='overflow-hidden px-2'>
           <div className='relative flex min-h-screen flex-col'>
-            <div className='absolute top-24 left-1/2 -translate-x-1/2 md:top-0 md:left-0 md:translate-x-0'>
-              <h1>Welcome!</h1>
+            <div className='absolute top-24 left-1/2 flex w-full -translate-x-1/2 items-start justify-between md:top-0 md:left-0 md:translate-x-0'>
+              <Title>Welcome!</Title>
+              <div className='pt-5'>
+                <ConnectButton />
+              </div>
             </div>
-            <div className='flex h-full flex-grow flex-col items-center justify-center'>
-              <HandWrapper
-                initial={{ y: 1000 }}
-                animate={{ y: 600 }}
-                hover={{ y: 500 }}
-                image={Pointer1}
-              >
-                <AccentButton
-                  title='Connect wallet'
-                  description='Connect only burner wallet to keep your funds safe!'
-                />
-              </HandWrapper>
-            </div>
+            <motion.div
+              layout
+              className='flex h-full w-full flex-grow flex-row items-center justify-center gap-[576px]'
+            >
+              <AnimatePresence>
+                {address && (
+                  <motion.div layout>
+                    <HandWrapper
+                      initial={{ y: 1000 }}
+                      animate={{ y: 600 }}
+                      hover={{ y: 500 }}
+                      skinIndex={1}
+                      image={Pointer1}
+                    >
+                      <AccentButton
+                        href='/choose'
+                        title='Play'
+                        description='Start a new game...'
+                      />
+                    </HandWrapper>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              <AnimatePresence>
+                <motion.div layout>
+                  <HandWrapper
+                    initial={{ y: 1000 }}
+                    animate={{ y: 600 }}
+                    hover={{ y: 500 }}
+                    skinIndex={0}
+                    image={Pointer2}
+                  >
+                    <AccentButton
+                      href='/rules'
+                      title='Rules'
+                      description='Read the rules...'
+                    />
+                  </HandWrapper>
+                </motion.div>
+              </AnimatePresence>
+            </motion.div>
             <div className='absolute bottom-6 left-5 flex flex-row gap-5'>
               <IconLink href={twitterUrl}>
                 <TwitterIcon />
