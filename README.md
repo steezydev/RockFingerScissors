@@ -14,7 +14,14 @@ RockFingerScissors is a decentralized application (dApp) built on the Binance Sm
 
 ## Game Concept
 
-The concept of the game is no different from a simple rock-paper-scissors game (paper is replaces by finger). The user selects between rock, finger or scissors, and then calls the `play(_choice)` method in the smart contract, sending `0.01 TBNB` as a default bet. The smart contract then randomly generates a number between 1 and 3, with 1 representing rock, 2 - finger and 3 - scissors. If the user's choice beats the randomly generated number, the user wins and receives `0.02 TBNB` in return.
+The concept of the game is no different from a simple rock-paper-scissors game (paper is replaces by finger). The user selects between rock, finger or scissors, and then calls the `play(_choice)` method in the smart contract, sending `0.001 TBNB` as a default bet. The smart contract then randomly generates a number between 1 and 3, with 1 representing rock, 2 - finger and 3 - scissors. If the user's choice beats the randomly generated number, the user wins and receives double of the bet in return.
+
+## Rules
+Rules are simple:
+
+- Rock > Scissors
+- Scissors > Finger
+- Finger > Rock
 
 ## Getting Started
 
@@ -29,4 +36,4 @@ The project is structured as a yarn monorepo
 
 ## Conclusion
 
-RockFingerScissors is a simple yet entertaining game built on the Binance Smart Chain. It allows users to interact with a smart contract and win TBNB if they win the game. The game was built as a project for the [tern.crypto](https://t.me/terncrypto) & [BNBChain](https://t.me/BNBCISDevs) contest
+RockFingerScissors is a simple yet entertaining game built on the Binance Smart Chain. It allows users to interact with a smart contract and win TBNB if they win the game. The game was built as a project for the [tern.crypto](https://t.me/terncrypto) & [BNBChain](https://t.me/BNBCISDevs) coding contest
