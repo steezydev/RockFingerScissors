@@ -9,10 +9,10 @@
 ⚠️ **Mobile version is not supported yet** ⚠️
 
 ## Todo
-- [x] (Working smart-contract)
-- [x] (DApp design and functionality)
-- [ ] (Game history)
-- [ ] (Responsiveness)
+- [x] Working smart-contract
+- [x] DApp design and functionality
+- [ ] Game history
+- [ ] Responsiveness
 
 ## Overview
 
