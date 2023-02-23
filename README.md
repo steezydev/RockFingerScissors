@@ -8,6 +8,12 @@
 # RockFingerScissors 
 ⚠️ **Mobile version is not supported yet** ⚠️
 
+## Todo
+- [x] (Working smart-contract)
+- [x] (DApp design and functionality)
+- [ ] (Game history)
+- [ ] (Responsiveness)
+
 ## Overview
 
 RockFingerScissors is a decentralized application (dApp) built on the Binance Smart Chain Testnet that allows users to play a game of rock-paper-scissors against the smart contract. The smart contract for the game is written in Solidity and the front-end dApp is created with Next.js.
