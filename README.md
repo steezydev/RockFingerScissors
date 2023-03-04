@@ -18,6 +18,11 @@
 
 RockFingerScissors is a decentralized application (dApp) built on the Binance Smart Chain Testnet that allows users to play a game of rock-paper-scissors against the smart contract. The smart contract for the game is written in Solidity and the front-end dApp is created with Next.js.
 
+Game is deployed to following networks:
+- [x] BSC Testnet
+- [ ] Mantle Testnet
+- [ ] ConsenSys zkEVM Testnet
+
 ## Game Concept
 
 The concept of the game is no different from a simple rock-paper-scissors game (paper is replaces by finger). The user selects between rock, finger or scissors, and then calls the `play(_choice)` method in the smart contract, sending `0.001 TBNB` as a default bet. The smart contract then randomly generates a number between 1 and 3, with 1 representing rock, 2 - finger and 3 - scissors. If the user's choice beats the randomly generated number, the user wins and receives double of the bet in return.
@@ -39,7 +44,3 @@ The project is structured as a yarn monorepo
 
 - `dapp` - RockFingerScissors Next.js front-end dApp
 - `contract` - RockFingerScissors smart-contract built with Solidity
-
-## Conclusion
-
-RockFingerScissors is a simple yet entertaining game built on the Binance Smart Chain. It allows users to interact with a smart contract and win TBNB if they win the game. The game was built as a project for the [tern.crypto](https://t.me/terncrypto) & [BNBChain](https://t.me/BNBCISDevs) coding contest
