@@ -7,7 +7,7 @@
     font-family: 'ClashDisplay';
     font-style: normal;
     font-weight: 100 900;
-    font-display: optional;
+    font-display: swap;
     src: url('/fonts/clashdisplay.ttf') format('opentype');
   }
 
@@ -15,7 +15,7 @@
     font-family: 'Outfit';
     font-style: normal;
     font-weight: 100 900;
-    font-display: optional;
+    font-display: swap;
     src: url('/fonts/outfit.ttf') format('opentype');
   }
 
@@ -23,7 +23,7 @@
     font-family: 'Grandstander';
     font-style: normal;
     font-weight: 100 900;
-    font-display: optional;
+    font-display: swap;
     src: url('/fonts/grandstander.ttf') format('opentype');
   }
 
@@ -31,7 +31,7 @@
     font-family: 'Rusty Hooks';
     font-style: normal;
     font-weight: 500;
-    font-display: optional;
+    font-display: swap;
     src: url('/fonts/rustyhooks.ttf') format('opentype');
   }
 
